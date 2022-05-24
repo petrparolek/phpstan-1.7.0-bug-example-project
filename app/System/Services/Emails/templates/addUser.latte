@@ -1,0 +1,16 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Vytvoření uživatelského účtu na serveru http://{$url}</title>
+</head>
+<body>
+<p>Dobrý den,</p>
+<p>administrátor právě vytvořil uživatelský účet na webových stránkách {$url}</p>
+<p>Uživatelské jméno: {$username}</p>
+<p>Odkaz na vytvoření hesla <a
+            n:href="Auth:Sign:recoveryPassword $username,$recoveryToken">{link Auth:Sign:recoveryPassword $username,$recoveryToken}</a>
+</p>
+<p>S pozdravem<br><br></p>
+<p>Tým webu {$url}<p>
+</body>
+</html>

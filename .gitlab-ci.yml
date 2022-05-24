@@ -1,0 +1,37 @@
+variables:
+    GIT_DEPTH: "1"
+    MYSQL_HOST: mariadb
+    MYSQL_USER: root
+    # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+    MYSQL_DATABASE: is
+    MYSQL_ROOT_PASSWORD: mysql
+
+stages:
+    - test
+
+php8.0:phpcs:
+    image: webnazakazku/docker-php-build:8.0
+    stage: test
+    script:
+        - composer config -g github-oauth.github.com $OAUTH_ACCESS_TOKEN
+        - composer install --no-interaction --no-progress --optimize-autoloader
+        - composer phpcs
+
+php8.0:phpstan:
+    image: webnazakazku/docker-php-build:8.0
+    stage: test
+    services:
+        - mariadb:10.5
+    script:
+        - composer config -g github-oauth.github.com $OAUTH_ACCESS_TOKEN
+        - composer install --no-interaction --no-progress --optimize-autoloader
+        - bash ci/create_test_neon.sh
+        - composer set-config -- $(pwd)/app/config/config.parameters.local.neon
+            --database.host=$MYSQL_HOST
+            --database.user=$MYSQL_USER
+            --database.password=$MYSQL_ROOT_PASSWORD
+            --database.dbname=$MYSQL_DATABASE
+            --exceptionFromEmail=$EXCEPTION_FROM_EMAIL
+            --emailFrom='no-reply@example.com'
+            --consoleUrl='http://pp-is.localhost/'
+        - bash tests/run-static-analysis.sh

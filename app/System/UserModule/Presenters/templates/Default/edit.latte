@@ -1,0 +1,34 @@
+{block content}
+<!-- Breadcrumb-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a n:href=":System:Default:">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a n:href=":Users:Default:">Uživatelé</a>
+    </li>
+    <li n:block=title class="breadcrumb-item active">Upravit uživatele</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" n:foreach="$tabPanels as $panel">
+                <a class="nav-link {$iterator->isFirst() ? 'active'}" data-toggle="tab" href="#{$panel['href']}"
+                   role="tab" aria-controls="{$panel['href']}">{$panel['title']}
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div n:foreach="$tabControls as $tabControl" class="tab-pane {$iterator->isFirst() ? 'active'}"
+                                                         id="{$tabControl['tabId']}" role="tabpanel">
+                {control $tabControl['controlName']}
+            </div>
+        </div>
+    </div>
+</div>
+
+{define js}
+    {include #parent}
+    {var Nette\Application\UI\Form $editUserAddressForm = $control['editUserAddressForm']['editUserAddressForm']}
+    {var $formId = $editUserAddressForm->getElementPrototype()->id}
+{/define}

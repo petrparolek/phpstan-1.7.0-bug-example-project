@@ -1,0 +1,23 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+
+application:
+	errorPresenter: System:Error
+	mapping:
+		*: App\*\Presenters\*Presenter
+		Auth: App\System\AuthModule\Presenters\*Presenter
+		Users: App\System\UserModule\Presenters\*Presenter
+
+session:
+	expiration: 14 days
+	save_path: "%tempDir%/sessions"
+
+http:
+	cookieSecure: auto
+
+includes:
+	- config.extensions.neon
+	- config.services.neon
+	- config.parameters.neon

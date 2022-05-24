@@ -1,0 +1,59 @@
+extensions:
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+
+	nettrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
+
+	nettrine.cache: Nettrine\Cache\DI\CacheExtension
+
+	nettrine.dbal: Nettrine\DBAL\DI\DbalExtension
+	nettrine.dbal.console: Nettrine\DBAL\DI\DbalConsoleExtension
+
+	nettrine.orm: Nettrine\ORM\DI\OrmExtension
+	nettrine.orm.cache: Nettrine\ORM\DI\OrmCacheExtension
+	nettrine.orm.console: Nettrine\ORM\DI\OrmConsoleExtension
+	nettrine.orm.attributes: Nettrine\ORM\DI\OrmAttributesExtension
+
+	translation: Contributte\Translation\DI\TranslationExtension
+
+console:
+	catchExceptions: true
+	autoExit: true
+	lazy: false
+	url: %consoleUrl%
+
+nettrine.dbal:
+	connection:
+		driver: mysqli
+		host: %database.host%
+		user: %database.user%
+		password: %database.password%
+		dbname: %database.dbname%
+		charset: utf8
+	debug:
+		panel: %debugMode%
+		sourcePaths: [%appDir%]
+
+nettrine.orm:
+	configuration:
+		proxyDir: '%tempDir%/cache/proxies'
+	entityManagerDecoratorClass: App\System\Model\EntityManagerDecorator
+
+nettrine.orm.attributes:
+	mapping: [
+		App\System\Entities: %appDir%/System/Entities
+	]
+
+services:
+	subscriber1:
+		factory: App\System\Model\TablePrefixSubscriber('')
+		tags: [nettrine.subscriber]
+
+translation:
+	locales:
+		whitelist: [en, cs]
+		default: cs
+	dirs:
+		- %appDir%/lang
+	localeResolvers:
+		- Contributte\Translation\LocalesResolvers\Parameter
+		- Contributte\Translation\LocalesResolvers\Router

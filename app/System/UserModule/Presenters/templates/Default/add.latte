@@ -1,0 +1,27 @@
+{block content}
+<!-- Breadcrumb-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a n:href=":System:Default:">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a n:href=":Users:Default:">Uživatelé</a>
+    </li>
+    <li n:block=title class="breadcrumb-item active">Přidat uživatele</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#overview"
+                   role="tab" aria-controls="overview">Základní nastavení
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="overview" role="tabpanel">
+                {control editUserForm}
+            </div>
+        </div>
+    </div>
+</div>

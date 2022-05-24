@@ -1,0 +1,13 @@
+{block content}
+<!-- Breadcrumb-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a n:href=":System:Default:">Home</a>
+    </li>
+    <li n:block=title class="breadcrumb-item active">Uživatelé</li>
+</ol>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        {control userGrid}
+    </div>
+</div>

@@ -1,0 +1,5 @@
+id: "id"
+username: "Uživatelské jméno"
+email: "E-mail"
+role: "Role"
+confirm_delete: "Opravdu smazat uživatele %s?"

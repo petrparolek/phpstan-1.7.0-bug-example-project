@@ -1,0 +1,4 @@
+parameters:
+	uploadedDir: 'uploaded'
+	absoluteUploadedDir: %wwwDir%/%uploadedDir%
+	emailFrom: no-reply@example.com

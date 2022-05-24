@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Přihlášení | PP IS</title>
+    <!-- Icons-->
+    <link href="{$basePath}/vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application-->
+    <link href="{$basePath}/css/coreui.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="app flex-row align-items-center">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card mx-4">
+                <div class="card-body p-4">
+                    <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
+                        {$flash->message}
+                    </div>
+                    <h2 class="text-center">Přihlášení</h2>
+                    <p class="text-muted"></p>
+                    <form n:name=signInForm role="form">
+                        <div n:if="$form->ownErrors" n:foreach="$form->ownErrors as $error" class="alert alert-danger">
+                            {$error}
+                        </div>
+                        <div n:foreach="$form->controls as $name => $input"
+                                n:if="!$input->getOption(rendered) && $input->getOption(type) !== hidden"
+                                n:class="form-group, $input->required ? required, $input->error ? has-error">
+
+                            {label $input /}
+                            {if $input->getOption(type) in [text, select, textarea]}
+                                {input $input class => form-control, placeholder => $input->caption}
+                            {elseif $input->getOption(type) === button}
+                                {input $input class => "btn btn-lg btn-success btn-block"}
+                            {elseif $input->getOption(type) === checkbox}
+                                <div class="checkbox">{input $input}</div>
+                            {elseif $input->getOption(type) === radio}
+                                <div class="radio">{input $input}</div>
+                            {else}
+                                {input $input}
+                            {/if}
+
+                            <span class=has-error n:ifcontent>{$input->error}</span>
+                        </div>
+                    </form>
+                    <a n:href=":Auth:Sign:forgottenPassword">Zapomenuté heslo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- CoreUI and necessary plugins-->
+<script src="{$basePath}/vendors/jquery/js/jquery.min.js"></script>
+<script src="{$basePath}/vendors/popper.js/js/popper.min.js"></script>
+<script src="{$basePath}/vendors/bootstrap/js/bootstrap.min.js"></script>
+<script src="{$basePath}/vendors/pace-progress/js/pace.min.js"></script>
+<script src="{$basePath}/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
+<script src="{$basePath}/js/coreui.js"></script>
+
+<script src="{$basePath}/node_modules/nette-forms/src/assets/netteForms.js"></script>
+</body>
+
+</html>

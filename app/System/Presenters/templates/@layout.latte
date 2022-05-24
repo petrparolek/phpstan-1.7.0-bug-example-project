@@ -1,0 +1,254 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+*}
+
+<html lang="cs">
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{ifset title}{include title|stripHtml|trim} | {/ifset}PP IS</title>
+    <!-- Icons-->
+    <link href="{$basePath}/vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application-->
+    <link href="{$basePath}/css/coreui.css" rel="stylesheet">
+    <link href="{$basePath}/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css"
+          href="{$basePath}/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" type="text/css" href="{$basePath}/node_modules/ublaboo-datagrid/assets/datagrid.css">
+
+    <!-- Use this css for ajax spinners -->
+    <link rel="stylesheet" type="text/css"
+          href="{$basePath}/node_modules/ublaboo-datagrid/assets/datagrid-spinners.css">
+
+    <!-- Include this css when using FilterMultiSelect (silviomoreto.github.io/bootstrap-select) -->
+    <link rel="stylesheet" type="text/css"
+          href="{$basePath}/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+    <link href="{$basePath}/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{$basePath}/node_modules/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css">
+
+    <style>
+        span.select2-container {
+            z-index:10050;
+        }
+    </style>
+
+    <link href="{$basePath}/node_modules/toastr/build/toastr.css" rel="stylesheet">
+
+    <style>
+        #toast-container > .toast {
+            background-image: none !important;
+        }
+
+        #toast-container > .toast:before {
+            position: fixed;
+            font-family: FontAwesome;
+            font-size: 24px;
+            line-height: 18px;
+            float: left;
+            color: #FFF;
+            padding-right: 0.5em;
+            margin: auto 0.5em auto -1.5em;
+        }
+
+        #toast-container > .toast-warning:before {
+            content: "\f071";
+        }
+
+        #toast-container > .toast-error:before {
+            content: "\f071";
+        }
+
+        #toast-container > .toast-info:before {
+            content: "\f129";
+        }
+
+        #toast-container > .toast-success:before {
+            content: "\f00c	";
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="{$basePath}/node_modules/happy-inputs/src/happy.css">
+
+    {block css}{/block}
+</head>
+{*var $minimized = ' brand-minimized sidebar-minimized'*}
+
+<body class="app header-fixed sidebar-fixed sidebar-lg-show">
+<header class="app-header navbar">
+    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">
+        PP IS
+    </a>
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">
+                <i class="fa fa-info-circle"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" n:href=":System:About:">
+                    O PP IS</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">
+                <img class="img-avatar" src="{$basePath}/img/avatars/avatar.jpg" alt="avatar}">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header text-center">
+                    <strong>{$user->getIdentity()->username}</strong>
+                </div>
+                <a class="dropdown-item" n:href=":Auth:Sign:logout $backlink">
+                    <i class="fa fa-sign-out"></i> Odhlásit se</a>
+            </div>
+        </li>
+    </ul>
+</header>
+<div class="app-body">
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><i class="nav-icon icon-home"></i> Hlavní stránka</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/users" class="nav-link active"><i
+                                class="nav-icon icon-people"></i> Uživatelé</a>
+                </li>
+            </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    </div>
+    <main class="main">
+        {snippet alerts}
+            <div class="alert alert-warning" n:foreach="$alerts as $flash">{$flash->message|noescape}</div>
+        {/snippet}
+        {if !$appError || $presenter->getAction(TRUE) == ':Settings:Default:general' || $presenter->getAction(TRUE) == ':Settings:Default:myProfile'}
+            {include content}
+        {/if}
+    </main>
+</div>
+<footer class="app-footer">
+
+</footer>
+
+{if !$appError || $presenter->getAction(TRUE) == ':Settings:Default:general' || $presenter->getAction(TRUE) == ':Settings:Default:myProfile'}
+    {snippet modal}
+        {if $presenter->isAjax()}
+            {ifset #modal}
+                <!-- Modal -->
+                <div class="modal fade modal-ajax" id="myModal" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">{block |stripHtml}{include #title}{/block}</h4>
+
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {include #modal}
+                            </div>
+                            {ifset #modalFooter}
+                                <div class="modal-footer">
+                                    {include #modalFooter}
+                                </div>
+                            {/ifset}
+                        </div>
+                    </div>
+                    <!-- /.modal-dialog-->
+                </div>
+                <!-- /.modal-->
+            {/ifset}
+        {/if}
+    {/snippet}
+{/if}
+
+    <!-- CoreUI and necessary plugins-->
+<script src="{$basePath}/vendors/jquery/js/jquery.min.js"></script>
+<script src="{$basePath}/node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="{$basePath}/vendors/bootstrap/js/bootstrap.min.js"></script>
+
+{*<script src="{$basePath}/vendors/pace-progress/js/pace.min.js"></script>*}
+<script src="{$basePath}/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
+<script src="{$basePath}/js/coreui.js"></script>
+
+<script src="{$basePath}/node_modules/happy-inputs/src/nomodule-es5-fallback.js"></script>
+<script>
+    var happy = new Happy;
+
+    happy.init();
+</script>
+
+<script src="{$basePath}/node_modules/naja/dist/Naja.js"></script>
+<script type="module">
+    naja.registerExtension(new AjaxFlashesExtension());
+    naja.registerExtension(new DatepickerExtension());
+    naja.registerExtension(new ModalExtension());
+    naja.registerExtension(new Select2Extension());
+    document.addEventListener('DOMContentLoaded', () => naja.initialize({
+        history: false,
+    }));
+</script>
+
+<script src="{$basePath}/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="{$basePath}/node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.cs.min.js"
+        charset="UTF-8"></script>
+
+<script src="{$basePath}/js/app/datepicker.js"></script>
+
+<script src="{$basePath}/node_modules/jquery-ui-sortable/jquery-ui.min.js"></script>
+<script src="{$basePath}/node_modules/ublaboo-datagrid/assets/datagrid.js"></script>
+
+<!-- It is recommended to include this JS file with just a few bits. It refreshes URL on non ajax request -->
+<script src="{$basePath}/js/app/naja-extensions/datagrid-instant-url-refresh.js"></script>
+
+<!-- Use this little extension for ajax spinners -->
+<script src="{$basePath}/node_modules/ublaboo-datagrid/assets/datagrid-spinners.js"></script>
+
+<!-- Include bootstrap-select.js when using FilterMultiSelect (silviomoreto.github.io/bootstrap-select) -->
+<script src="{$basePath}/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
+
+<script src="{$basePath}/node_modules/bootstrap-select/dist/js/i18n/defaults-cs_CZ.js"></script>
+<script src="{$basePath}/node_modules/select2/dist/js/select2.min.js"></script>
+<script src="{$basePath}/node_modules/select2/dist/js/i18n/cs.js"></script>
+
+<script src="{$basePath}/js/app/select2.js"></script>
+
+<script src="{$basePath}/js/app/myTabs.js"></script>
+<script src="{$basePath}/node_modules/live-form-validation/live-form-validation.js"></script>
+<script src="{$basePath}/js/nette-live-form-validation/config.js"></script>
+<script src="{$basePath}/js/app/naja-extensions/ajaxFlashes.js"></script>
+<script src="{$basePath}/js/app/naja-extensions/datepicker.js"></script>
+<script src="{$basePath}/js/app/naja-extensions/modal.js"></script>
+<script src="{$basePath}/js/app/naja-extensions/select2.js"></script>
+<script src="{$basePath}/node_modules/toastr/build/toastr.min.js"></script>
+<script src="{$basePath}/js/toastr/config.js"></script>
+<script src="{$basePath}/js/app/sidebar.js"></script>
+
+{snippet flashes}
+    <script>
+        {foreach $flashes as $flash}
+        toastr.{$flash->type|noescape}({_$flash->message});
+        {/foreach}
+    </script>
+{/snippet}
+
+{block js}{/block}
+
+</body>
+</html>

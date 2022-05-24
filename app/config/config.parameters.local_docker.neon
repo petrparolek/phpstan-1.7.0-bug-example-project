@@ -1,0 +1,7 @@
+parameters:
+	database:
+		host: database
+		user: root
+		password: root
+		dbname: pp-is
+	consoleUrl: http://pp-is.localhost/

@@ -1,0 +1,12 @@
+nbproject/private/*
+log/*
+temp/*
+vendor/*
+!.gitignore
+!.htaccess
+!web.config
+app/config/config.local.neon
+app/config/config.parameters.local.neon
+tests/**/output
+tests/php-tests.ini
+www/node_modules/

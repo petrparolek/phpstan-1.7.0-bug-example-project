@@ -1,0 +1,25 @@
+services:
+	- App\System\Components\Forms\FormFactory
+
+	- App\System\AuthModule\Components\Sign\Forms\ForgottenPasswordForm
+	- App\System\AuthModule\Components\Sign\Forms\RecoveryPasswordForm
+	- App\System\AuthModule\Components\Sign\Forms\SignInForm
+
+	authenticator: App\System\Services\Authenticator
+
+	router: App\System\Router\RouterFactory::createRouter
+
+	- App\System\UserModule\Components\Datagrids\Default\UserGrid
+
+	- App\System\UserModule\Components\Forms\Default\EditUserForm
+
+	- App\Utils\Components\ControlFactory
+
+	- App\System\Services\Emails\RegistrationNotificationSender
+	- App\System\Services\Emails\BaseEmailSender(%emailFrom%)
+
+	- App\System\Services\UserService
+
+	userRepository:
+		class: App\System\Repositories\UserRepository
+		factory: @Doctrine\ORM\EntityManagerInterface::getRepository(App\System\Entities\User)

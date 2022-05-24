@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"@ttskch/select2-bootstrap4-theme": "^1.5.2",
+		"bootstrap-datepicker": "^1.8.0",
+		"bootstrap-select": "~1.13.0",
+		"happy-inputs": "^2.1.0",
+		"jquery-ui-sortable": "^1.0.0",
+		"live-form-validation": "https://github.com/contributte/live-form-validation.git",
+		"naja": "^2.0.1",
+		"nette-forms": "~3.0.0",
+		"popper.js": "^1.14.7",
+		"raphael": "^2.2.7",
+		"select2": "^4.0",
+		"toastr": "^2.1.4",
+		"ublaboo-datagrid": "~6.7.0"
+	}
+}

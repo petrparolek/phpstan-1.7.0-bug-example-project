@@ -1,0 +1,12 @@
+// Here you can add other styles
+.app-body {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+	overflow-x: visible;
+}
+
+.app-body .main {
+    flex: 1;
+    min-width: auto;
+}
