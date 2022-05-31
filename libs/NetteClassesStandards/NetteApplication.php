@@ -7,6 +7,7 @@ use Nette\Bridges\ApplicationDI\ApplicationExtension;
 use Nette\Bridges\ApplicationLatte;
 
 if (class_exists(ApplicationExtension::class)) {
+	class_alias(IPresenter::class, PresenterInterface::class);
 	class_alias(Response::class, ResponseInterface::class);
 
 	class_alias(UI\Renderable::class, UI\RenderableInterface::class);

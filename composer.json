@@ -75,7 +75,8 @@
 			"libs/NetteClassesStandards/NetteSchema.php",
 			"libs/NetteClassesStandards/NetteSecurity.php",
 			"libs/NetteClassesStandards/NetteTester.php",
-			"libs/NetteClassesStandards/NetteUtils.php"
+			"libs/NetteClassesStandards/NetteUtils.php",
+			"libs/NetteClassesStandards/Tracy.php"
 		]
 	},
 	"minimum-stability": "stable",

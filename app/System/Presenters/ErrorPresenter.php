@@ -5,7 +5,7 @@ namespace App\System\Presenters;
 use Nette;
 use Nette\Application\Responses;
 use Nette\Http;
-use Tracy\ILogger;
+use Tracy\LoggerInterface;
 use function preg_match;
 
 final class ErrorPresenter implements Nette\Application\IPresenter
@@ -13,11 +13,11 @@ final class ErrorPresenter implements Nette\Application\IPresenter
 
 	use Nette\SmartObject;
 
-	public function __construct(private ILogger $logger)
+	public function __construct(private LoggerInterface $logger)
 	{
 	}
 
-	public function run(Nette\Application\Request $request): Nette\Application\IResponse
+	public function run(Nette\Application\Request $request): Nette\Application\ResponseInterface
 	{
 		$e = $request->getParameter('exception');
 
@@ -29,7 +29,7 @@ final class ErrorPresenter implements Nette\Application\IPresenter
 			return new Responses\ForwardResponse($request->setPresenterName($errorPresenter));
 		}
 
-		$this->logger->log($e, ILogger::EXCEPTION);
+		$this->logger->log($e, LoggerInterface::EXCEPTION);
 
 		return new Responses\CallbackResponse(
 			static function (Http\RequestInterface $httpRequest, Http\IResponse $httpResponse): void {
